@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏋🏻‍♂️ Fitness Routine Checklist</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      :root {
+        /* Main colors */
+        --primary: #7c3aed; /* Vibrant purple */
+        --primary-hover: #6d28d9; /* Darker purple */
+        --bg-dark: #0f172a; /* Deep navy */
+        --card-bg: #1e293b; /* Slate blue */
+        --card-border: #334155; /* Border color */
+
+        /* Text colors */
+        --text-primary: #f8fafc; /* Almost white */
+        --text-secondary: #94a3b8; /* Muted gray */
+        --text-accent: #818cf8; /* Soft indigo */
+
+        /* Status colors */
+        --success: #10b981; /* Emerald green */
+        --warning: #f59e0b; /* Amber */
+        --error: #ef4444; /* Red */
+
+        /* Timer colors */
+        --timer-active: #22d3ee; /* Cyan */
+        --timer-done: #10b981; /* Green */
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-primary);
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        letter-spacing: -0.01em;
+        line-height: 1.5;
+      }
+
+      .navbar {
+        background-color: rgba(30, 41, 59, 0.95) !important;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--card-border);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        color: var(--text-primary) !important;
+        letter-spacing: -0.02em;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-color: var(--primary);
+      }
+
+      .card-header {
+        border-bottom-color: var(--card-border) !important;
+        padding: 1rem 1.25rem;
+      }
+
+      .exercise-media {
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--card-border);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .exercise-media video,
+      .exercise-media img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .exercise-media:hover video,
+      .exercise-media:hover img {
+        transform: scale(1.05);
+      }
+
+      .timer-display {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--timer-active);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin: 1rem 0;
+        text-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+      }
+
+      .timer-display.done {
+        color: var(--timer-done);
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+      }
+
+      .btn-timer {
+        background-color: var(--primary);
+        border: none;
+        padding: 0.625rem 1.25rem;
+        font-weight: 600;
+        letter-spacing: 0.025em;
+        transition: all 0.2s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-timer:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-timer:disabled {
+        background-color: var(--card-border);
+        opacity: 0.7;
+        transform: none;
+      }
+
+      .exercise-name {
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: 1.125rem;
+        letter-spacing: -0.02em;
+      }
+
+      .exercise-details {
+        color: var(--text-secondary);
+        font-size: 0.925rem;
+        font-weight: 500;
+      }
+
+      .form-check-input {
+        border-color: var(--card-border);
+        background-color: var(--card-bg);
+        width: 1.25rem;
+        height: 1.25rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .form-check-input:checked {
+        background-color: var(--success);
+        border-color: var(--success);
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+      }
+
+      .form-check-label {
+        cursor: pointer;
+        user-select: none;
+        padding-left: 0.25rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      .accordion-item {
+        background-color: var(--card-bg) !important;
+        border: 1px solid var(--card-border) !important;
+        margin-bottom: 0.75rem;
+        border-radius: 0.75rem !important;
+        overflow: hidden;
+      }
+
+      .accordion-button {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        padding: 1.25rem;
+        transition: all 0.2s ease;
+      }
+
+      .accordion-button:not(.collapsed) {
+        color: var(--primary) !important;
+        box-shadow: 0 1px 0 var(--card-border);
+      }
+
+      .accordion-button:hover {
+        background-color: rgba(124, 58, 237, 0.1) !important;
+      }
+
+      .accordion-button::after {
+        filter: invert(1) hue-rotate(180deg);
+      }
+
+      .accordion-body {
+        padding: 1.5rem;
+        background-color: rgba(15, 23, 42, 0.3);
+      }
+
+      .exercise-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -1rem;
+      }
+
+      .exercise-list > div {
+        padding: 1rem;
+      }
+
+      .workout-timer {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .workout-timer .timer-display {
+        font-size: 3rem;
+        color: var(--text-accent);
+      }
+
+      .workout-timer .btn {
+        margin: 0 0.5rem;
+      }
+
+      .btn-skip {
+        background-color: var(--warning);
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+      }
+
+      .btn-skip:hover {
+        background-color: #d97706;
+      }
+
+      .timer-label {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .timer-display {
+          font-size: 2rem;
+        }
+
+        .exercise-list {
+          margin: 0 -0.5rem;
+        }
+
+        .exercise-list > div {
+          padding: 0.5rem;
+        }
+
+        .accordion-body {
+          padding: 1rem;
+        }
+
+        .card:hover {
+          transform: none;
+        }
+      }
+
+      /* Add subtle animations */
+      @keyframes timerPulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .timer-display.active {
+        animation: timerPulse 2s ease-in-out infinite;
+      }
+
+      .loading-placeholder {
+        color: var(--text-secondary);
+        text-align: center;
+        padding: 1rem;
+        font-style: italic;
+      }
+
+      .media-error {
+        color: var(--error);
+        text-align: center;
+        padding: 1rem;
+      }
+
+      footer {
+        background-color: var(--card-bg);
+        border-top: 1px solid var(--card-border);
+        padding: 1rem 0;
+        margin-top: 2rem;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+    </style>
+
+    <!-- Add Inter font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="#">🏋🏻‍♂️ Fitness Routine Checklist</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="accordion" id="workoutAccordion">
+        <!-- Day 1: Chest and Triceps -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day1" aria-expanded="true" aria-controls="day1">
+              Day 1: Chest and Triceps
+            </button>
+          </h2>
+          <div id="day1" class="accordion-collapse collapse show" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2: Back and Biceps -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day2" aria-expanded="false" aria-controls="day2">
+              Day 2: Back and Biceps
+            </button>
+          </h2>
+          <div id="day2" class="accordion-collapse collapse" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 3: Legs -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day3" aria-expanded="false" aria-controls="day3">Day 3: Legs</button>
+          </h2>
+          <div id="day3" class="accordion-collapse collapse" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 4: Shoulders and Abs -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day4" aria-expanded="false" aria-controls="day4">
+              Day 4: Shoulders and Abs
+            </button>
+          </h2>
+          <div id="day4" class="accordion-collapse collapse" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 5: Chest and Triceps -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day5" aria-expanded="false" aria-controls="day5">
+              Day 5: Chest and Triceps
+            </button>
+          </h2>
+          <div id="day5" class="accordion-collapse collapse" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 6: Back and Biceps -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day6" aria-expanded="false" aria-controls="day6">
+              Day 6: Back and Biceps
+            </button>
+          </h2>
+          <div id="day6" class="accordion-collapse collapse" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 7: Legs -->
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#day7" aria-expanded="false" aria-controls="day7">Day 7: Legs</button>
+          </h2>
+          <div id="day7" class="accordion-collapse collapse" data-bs-parent="#workoutAccordion">
+            <div class="accordion-body">
+              <div class="workout-timer">
+                <div class="timer-label">Total Workout Time</div>
+                <div class="total-timer-display timer-display">00:00:00</div>
+                <div class="mt-3">
+                  <button class="btn btn-primary start-workout">Start Workout</button>
+                  <button class="btn btn-danger stop-workout" disabled>Stop</button>
+                </div>
+              </div>
+              <div class="exercise-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Exercise template -->
+      <template id="exercise-template">
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card exercise-card h-100">
+            <div class="card-header bg-transparent border-bottom border-secondary">
+              <h5 class="exercise-name card-title mb-0"></h5>
+            </div>
+            <div class="exercise-media card-img-top">
+              <!-- Media placeholder -->
+            </div>
+            <div class="card-body">
+              <p class="exercise-details text-secondary mb-3"></p>
+              <div class="timer-section text-center mb-3">
+                <div class="timer-label">Rest Timer</div>
+                <div class="timer-display">00:00</div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <button class="btn btn-primary btn-timer">Start Rest</button>
+                  <button class="btn btn-warning btn-skip ms-2" style="display: none">Skip</button>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="exerciseCheck" />
+                  <label class="form-check-label" for="exerciseCheck">Completed</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p class="mb-0">© 2025 Sriyanshu Azad. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Workout data
+      const workoutData = {
+        day1: {
+          title: "Day 1: Chest and Triceps",
+          exercises: [
+            { name: "Barbell Bench Press", sets: 4, reps: "8-12", duration: 45, media: "./content/Bench-press-barbell.mp4" },
+            { name: "Incline Dumbbell Press", sets: 3, reps: "10-15", duration: 45, media: "./content/incline-dumbell-press.mp4" },
+            { name: "Cable Flyes", sets: 3, reps: "12-15", duration: 45, media: "./content/cable-flyes.mp4" },
+            { name: "Tricep Pushdowns", sets: 3, reps: "10-12", duration: 30, media: "./content/tricep-pushdown.jpg" },
+            { name: "Overhead Dumbbell Extension", sets: 3, reps: "12-15", duration: 30, media: "./content/overhead-rope-extension.webp" },
+            { name: "Tricep Kickbacks", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
+          ],
+        },
+        day2: {
+          title: "Day 2: Back and Biceps",
+          exercises: [
+            { name: "Pull-ups", sets: 3, reps: "8-12", duration: 45, media: "./content/Pull-ups.mp4" },
+            { name: "Barbell Rows", sets: 4, reps: "8-12", duration: 45, media: "./content/barbell-row.webp" },
+            { name: "Lat Pulldowns", sets: 3, reps: "10-12", duration: 45, media: "./content/lat-pulldown.mp4" },
+            { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/bicep-curl.mp4" },
+            { name: "Hammer Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/hammer-curl.mp4" },
+            { name: "Preacher Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/preacher-curl.webp" },
+          ],
+        },
+        day3: {
+          title: "Day 3: Legs",
+          exercises: [
+            { name: "Squats", sets: 4, reps: "8-12", duration: 45, media: "./content/squats.webp" },
+            { name: "Leg Press", sets: 3, reps: "10-12", duration: 45, media: "./content/leg-press.mp4" },
+            { name: "Lunges", sets: 3, reps: "10-12", duration: 45, media: "./content/lunges.mp4" },
+            { name: "Leg Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/leg-extension.png" },
+            { name: "Leg Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/leg-curls.mp4" },
+            { name: "Calf Raises", sets: 3, reps: "12-15", duration: 30, media: "./content/calf-raise.mp4" },
+          ],
+        },
+        day4: {
+          title: "Day 4: Shoulders and Abs",
+          exercises: [
+            { name: "Dumbbell Shoulder Press", sets: 3, reps: "8-12", duration: 45, media: "./content/shoulder-press.gif" },
+            { name: "Lateral Raises", sets: 3, reps: "10-12", duration: 30, media: "./content/lateral-raises.webp" },
+            { name: "Rear Delt Flyes", sets: 3, reps: "12-15", duration: 30, media: "./content/rear-delt-fly.webp" },
+            { name: "Hanging Leg Raises", sets: 3, reps: "10-12", duration: 30, media: "./content/hanging-leg-raise.webp" },
+            { name: "Planks", sets: 3, duration: 60, isStatic: true, media: "./content/plank.gif" },
+            { name: "Russian Twists", sets: 3, reps: "10-12", duration: 30, media: "./content/russian-twists.mp4" },
+          ],
+        },
+        day5: {
+          title: "Day 5: Chest and Triceps",
+          exercises: [
+            { name: "Incline Bench Press", sets: 4, reps: "8-12", duration: 45, media: "./content/incline-bench-press.mp4" },
+            { name: "Dumbbell Chest Press", sets: 3, reps: "10-12", duration: 45, media: "./content/Bench-press-barbell.mp4" },
+            { name: "Cable Crossovers", sets: 3, reps: "12-15", duration: 45, media: "./content/cable-flyes.mp4" },
+            { name: "Tricep Dips", sets: 3, reps: "10-12", duration: 30, media: "./content/tricep-dips.webp" },
+            { name: "Overhead Rope Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/overhead-rope-extension.webp" },
+            { name: "Tricep Kickbacks", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
+          ],
+        },
+        day6: {
+          title: "Day 6: Back and Biceps",
+          exercises: [
+            { name: "Deadlifts", sets: 4, reps: "8-12", duration: 45, media: "./content/Pull-ups.mp4" },
+            { name: "Bent-Over Barbell Rows", sets: 3, reps: "8-12", duration: 45, media: "./content/barbell-row.webp" },
+            { name: "Pull-aparts", sets: 3, reps: "10-12", duration: 45, media: "./content/lat-pulldown.mp4" },
+            { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/bicep-curl.mp4" },
+            { name: "Hammer Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/hammer-curl.mp4" },
+            { name: "Concentration Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/concentartion-curls.mp4" },
+          ],
+        },
+        day7: {
+          title: "Day 7: Legs",
+          exercises: [
+            { name: "Leg Press", sets: 4, reps: "8-12", duration: 45, media: "./content/leg-press.mp4" },
+            { name: "Squats", sets: 3, reps: "10-12", duration: 45, media: "./content/squats.webp" },
+            { name: "Lunges", sets: 3, reps: "10-12", duration: 45, media: "./content/lunges.mp4" },
+            { name: "Leg Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/leg-extension.png" },
+            { name: "Leg Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/leg-curls.mp4" },
+            { name: "Calf Raises", sets: 3, reps: "12-15", duration: 30, media: "./content/calf-raise.mp4" },
+          ],
+        },
+      };
+
+      // Global variable to track active workout day
+      let activeWorkoutDay = null;
+
+      // Timer functionality
+      function startTimer(duration, display, button, checkbox) {
+        let timer = duration;
+        button.disabled = true;
+        checkbox.disabled = true;
+
+        const countDown = setInterval(() => {
+          const minutes = Math.floor(timer / 60);
+          const seconds = timer % 60;
+
+          display.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+          if (--timer < 0) {
+            clearInterval(countDown);
+            button.disabled = false;
+            checkbox.disabled = false;
+            display.textContent = "Done!";
+            display.style.color = "#00ff88";
+          }
+        }, 1000);
+      }
+
+      // Workout Timer class
+      class WorkoutTimer {
+        constructor(displayElement, startButton, stopButton, dayId) {
+          this.display = displayElement;
+          this.startButton = startButton;
+          this.stopButton = stopButton;
+          this.dayId = dayId;
+          this.seconds = 0;
+          this.interval = null;
+          this.accordion = document.querySelector(`#workoutAccordion`);
+          this.collapse = document.querySelector(`#${dayId}`);
+          this.collapseBtn = document.querySelector(`button[data-bs-target="#${dayId}"]`);
+          this.preventCollapseHandler = this.preventCollapse.bind(this);
+        }
+
+        start() {
+          if (activeWorkoutDay && activeWorkoutDay !== this.dayId) {
+            alert("Another workout is already in progress. Please finish or stop the current workout first.");
+            return;
+          }
+
+          activeWorkoutDay = this.dayId;
+          this.startButton.disabled = true;
+          this.stopButton.disabled = false;
+
+          // Show this day's content
+          const bsCollapse = bootstrap.Collapse.getInstance(this.collapse) || new bootstrap.Collapse(this.collapse, { toggle: false });
+          bsCollapse.show();
+
+          // Store the original parent and remove parent relationship temporarily
+          this.accordion.dataset.prevParent = this.accordion.getAttribute("data-bs-parent");
+          this.collapse.dataset.bsParent = "";
+
+          // Add click handler to prevent collapse
+          this.collapseBtn.addEventListener("click", this.preventCollapseHandler);
+
+          // Disable all other day's start buttons
+          Object.keys(workoutData).forEach((dayId) => {
+            if (dayId !== this.dayId) {
+              const daySection = document.querySelector(`#${dayId}`);
+              const startBtn = daySection.querySelector(".start-workout");
+              startBtn.disabled = true;
+            }
+          });
+
+          this.interval = setInterval(() => {
+            this.seconds++;
+            this.updateDisplay();
+          }, 1000);
+        }
+
+        preventCollapse(event) {
+          if (activeWorkoutDay === this.dayId) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+          }
+        }
+
+        stop() {
+          this.startButton.disabled = false;
+          this.stopButton.disabled = true;
+          if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+          }
+
+          // Remove collapse prevention handler
+          this.collapseBtn.removeEventListener("click", this.preventCollapseHandler);
+
+          // Restore accordion functionality
+          this.collapse.dataset.bsParent = this.accordion.dataset.prevParent;
+          delete this.accordion.dataset.prevParent;
+
+          // Enable all day's start buttons
+          Object.keys(workoutData).forEach((dayId) => {
+            const daySection = document.querySelector(`#${dayId}`);
+            const startBtn = daySection.querySelector(".start-workout");
+            startBtn.disabled = false;
+          });
+
+          activeWorkoutDay = null;
+        }
+
+        reset() {
+          this.seconds = 0;
+          this.updateDisplay();
+        }
+
+        updateDisplay() {
+          const hours = Math.floor(this.seconds / 3600);
+          const minutes = Math.floor((this.seconds % 3600) / 60);
+          const secs = this.seconds % 60;
+          this.display.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+        }
+      }
+
+      // Rest Timer class
+      class RestTimer {
+        constructor(duration, display, startButton, skipButton, checkbox) {
+          this.duration = duration;
+          this.display = display;
+          this.startButton = startButton;
+          this.skipButton = skipButton;
+          this.checkbox = checkbox;
+          this.interval = null;
+        }
+
+        start() {
+          let timer = this.duration;
+          this.startButton.disabled = true;
+          this.skipButton.style.display = "inline-block";
+          this.checkbox.disabled = true;
+
+          this.interval = setInterval(() => {
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+            this.display.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+            if (--timer < 0) {
+              this.complete();
+            }
+          }, 1000);
+        }
+
+        skip() {
+          if (this.interval) {
+            clearInterval(this.interval);
+            this.complete();
+          }
+        }
+
+        complete() {
+          clearInterval(this.interval);
+          this.startButton.disabled = false;
+          this.skipButton.style.display = "none";
+          this.checkbox.disabled = false;
+          this.display.textContent = "Rest Complete!";
+          this.display.style.color = "var(--success)";
+        }
+      }
+
+      // Create exercise card
+      function createExerciseCard(exercise) {
+        const template = document.querySelector("#exercise-template");
+        const card = template.content.cloneNode(true);
+
+        const name = card.querySelector(".exercise-name");
+        const details = card.querySelector(".exercise-details");
+        const timerDisplay = card.querySelector(".timer-display");
+        const startButton = card.querySelector(".btn-timer");
+        const skipButton = card.querySelector(".btn-skip");
+        const checkbox = card.querySelector(".form-check-input");
+        const mediaContainer = card.querySelector(".exercise-media");
+
+        // Set unique ID for checkbox
+        const checkboxId = `exercise-${exercise.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+        checkbox.id = checkboxId;
+        card.querySelector(".form-check-label").setAttribute("for", checkboxId);
+
+        name.textContent = exercise.name;
+        details.textContent = `${exercise.sets} sets × ${exercise.reps} reps`;
+        timerDisplay.textContent = "00:00";
+
+        // Set up media placeholder with error handling
+        if (exercise.media) {
+          const mediaExt = exercise.media.split(".").pop().toLowerCase();
+          if (["mp4", "webm"].includes(mediaExt)) {
+            const video = document.createElement("video");
+            video.src = exercise.media;
+            video.controls = true;
+            video.muted = true; // Add muted attribute for autoplay to work
+            video.playsInline = true;
+            video.preload = "metadata";
+            video.style.width = "100%";
+            video.style.height = "200px";
+            video.style.objectFit = "cover";
+            video.style.backgroundColor = "var(--bg-dark)";
+
+            // Add loading placeholder
+            mediaContainer.innerHTML = '<div class="loading-placeholder">Loading video...</div>';
+
+            // Handle video loading
+            video.addEventListener("loadeddata", () => {
+              mediaContainer.innerHTML = ""; // Clear loading message
+              mediaContainer.appendChild(video);
+            });
+
+            // Handle video error
+            video.addEventListener("error", () => {
+              mediaContainer.innerHTML = `
+                            <div class="media-error">
+                                <p>Unable to load video</p>
+                                <small>${exercise.name}</small>
+                            </div>`;
+            });
+          } else {
+            const img = document.createElement("img");
+            img.src = exercise.media;
+            img.alt = exercise.name;
+            img.style.width = "100%";
+            img.style.height = "200px";
+            img.style.objectFit = "cover";
+            img.style.backgroundColor = "var(--bg-dark)";
+
+            // Add loading placeholder
+            mediaContainer.innerHTML = '<div class="loading-placeholder">Loading image...</div>';
+
+            // Handle image loading
+            img.onload = () => {
+              mediaContainer.innerHTML = ""; // Clear loading message
+              mediaContainer.appendChild(img);
+            };
+
+            // Handle image error
+            img.onerror = () => {
+              mediaContainer.innerHTML = `
+                            <div class="media-error">
+                                <p>Unable to load image</p>
+                                <small>${exercise.name}</small>
+                            </div>`;
+            };
+          }
+        }
+
+        startButton.addEventListener("click", () => {
+          startTimer(exercise.duration, timerDisplay, startButton, checkbox);
+        });
+
+        skipButton.addEventListener("click", function () {
+          const restTimer = new RestTimer(exercise.duration, timerDisplay, startButton, skipButton, checkbox);
+          restTimer.skip();
+        });
+
+        return card;
+      }
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize all workout days
+        Object.keys(workoutData).forEach((dayId) => {
+          const daySection = document.querySelector(`#${dayId}`);
+          const totalTimerDisplay = daySection.querySelector(".total-timer-display");
+          const startWorkoutBtn = daySection.querySelector(".start-workout");
+          const stopWorkoutBtn = daySection.querySelector(".stop-workout");
+
+          // Create workout timer for this day
+          const workoutTimer = new WorkoutTimer(totalTimerDisplay, startWorkoutBtn, stopWorkoutBtn, dayId);
+
+          startWorkoutBtn.addEventListener("click", () => workoutTimer.start());
+          stopWorkoutBtn.addEventListener("click", () => workoutTimer.stop());
+
+          // Initialize exercises
+          const dayExercises = daySection.querySelector(".exercise-list");
+          workoutData[dayId].exercises.forEach((exercise) => {
+            dayExercises.appendChild(createExerciseCard(exercise));
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
