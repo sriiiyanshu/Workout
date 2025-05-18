@@ -486,17 +486,12 @@
               <div class="timer-section text-center mb-3">
                 <div class="timer-label">Rest Timer</div>
                 <div class="timer-display">00:00</div>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <button class="btn btn-primary btn-timer">Start Rest</button>
-                  <button class="btn btn-warning btn-skip ms-2" style="display: none">Skip</button>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="exerciseCheck" />
-                  <label class="form-check-label" for="exerciseCheck">Completed</label>
+                <div class="timer-controls mt-2">
+                  <button class="btn btn-warning btn-skip ms-2" style="display: none">Skip Rest</button>
                 </div>
               </div>
+              <div class="sets-container"></div>
+              <div class="exercise-status text-center mt-3 text-secondary"></div>
             </div>
           </div>
         </div>
@@ -517,78 +512,78 @@
         day1: {
           title: "Day 1: Chest and Triceps",
           exercises: [
-            { name: "Barbell Bench Press", sets: 4, reps: "8-12", duration: 45, media: "./content/Bench-press-barbell.mp4" },
-            { name: "Incline Dumbbell Press", sets: 3, reps: "10-15", duration: 45, media: "./content/incline-dumbell-press.mp4" },
-            { name: "Cable Flyes", sets: 3, reps: "12-15", duration: 45, media: "./content/cable-flyes.mp4" },
-            { name: "Tricep Pushdowns", sets: 3, reps: "10-12", duration: 30, media: "./content/tricep-pushdown.jpg" },
-            { name: "Overhead Dumbbell Extension", sets: 3, reps: "12-15", duration: 30, media: "./content/overhead-rope-extension.webp" },
-            { name: "Tricep Kickbacks", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
+            { name: "Barbell Bench Press", sets: 4, reps: "8-12", duration: 45, media: "../content/Bench-press-barbell.mp4" },
+            { name: "Incline Dumbbell Press", sets: 3, reps: "10-15", duration: 45, media: "../content/incline-dumbell-press.mp4" },
+            { name: "Cable Flyes", sets: 3, reps: "12-15", duration: 45, media: "../content/cable-flyes.mp4" },
+            { name: "Tricep Pushdowns", sets: 3, reps: "10-12", duration: 30, media: "../content/tricep-pushdown.jpg" },
+            { name: "Overhead Dumbbell Extension", sets: 3, reps: "12-15", duration: 30, media: "../content/overhead-rope-extension.webp" },
+            { name: "Skull Crushers", sets: 3, reps: "8-10", duration: 30, media: "../content/Triceps-Kickback.mp4" },
           ],
         },
         day2: {
           title: "Day 2: Back and Biceps",
           exercises: [
-            { name: "Pull-ups", sets: 3, reps: "8-12", duration: 45, media: "./content/Pull-ups.mp4" },
-            { name: "Barbell Rows", sets: 4, reps: "8-12", duration: 45, media: "./content/barbell-row.webp" },
-            { name: "Lat Pulldowns", sets: 3, reps: "10-12", duration: 45, media: "./content/lat-pulldown.mp4" },
-            { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/bicep-curl.mp4" },
-            { name: "Hammer Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/hammer-curl.mp4" },
-            { name: "Preacher Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/preacher-curl.webp" },
+            { name: "Pull-ups", sets: 3, reps: "8-12", duration: 45, media: "../content/Pull-ups.mp4" },
+            { name: "Barbell Rows", sets: 4, reps: "8-12", duration: 45, media: "../content/barbell-row.webp" },
+            { name: "Lat Pulldowns", sets: 3, reps: "10-12", duration: 45, media: "../content/lat-pulldown.mp4" },
+            { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/bicep-curl.mp4" },
+            { name: "Hammer Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/hammer-curl.mp4" },
+            { name: "Preacher Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/preacher-curl.webp" },
           ],
         },
         day3: {
           title: "Day 3: Legs",
           exercises: [
-            { name: "Squats", sets: 4, reps: "8-12", duration: 45, media: "./content/squats.webp" },
-            { name: "Leg Press", sets: 3, reps: "10-12", duration: 45, media: "./content/leg-press.mp4" },
-            { name: "Lunges", sets: 3, reps: "10-12", duration: 45, media: "./content/lunges.mp4" },
-            { name: "Leg Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/leg-extension.png" },
-            { name: "Leg Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/leg-curls.mp4" },
-            { name: "Calf Raises", sets: 3, reps: "12-15", duration: 30, media: "./content/calf-raise.mp4" },
+            { name: "Squats", sets: 4, reps: "8-12", duration: 45, media: "../content/squats.webp" },
+            { name: "Leg Press", sets: 3, reps: "10-12", duration: 45, media: "../content/leg-press.mp4" },
+            { name: "Lunges", sets: 3, reps: "10-12", duration: 45, media: "../content/lunges.mp4" },
+            { name: "Leg Extensions", sets: 3, reps: "12-15", duration: 30, media: "../content/leg-extension.png" },
+            { name: "Leg Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/leg-curls.mp4" },
+            { name: "Calf Raises", sets: 3, reps: "12-15", duration: 30, media: "../content/calf-raise.mp4" },
           ],
         },
         day4: {
           title: "Day 4: Shoulders and Abs",
           exercises: [
-            { name: "Dumbbell Shoulder Press", sets: 3, reps: "8-12", duration: 45, media: "./content/shoulder-press.gif" },
-            { name: "Lateral Raises", sets: 3, reps: "10-12", duration: 30, media: "./content/lateral-raises.webp" },
-            { name: "Rear Delt Flyes", sets: 3, reps: "12-15", duration: 30, media: "./content/rear-delt-fly.webp" },
-            { name: "Hanging Leg Raises", sets: 3, reps: "10-12", duration: 30, media: "./content/hanging-leg-raise.webp" },
-            { name: "Planks", sets: 3, duration: 60, isStatic: true, media: "./content/plank.gif" },
-            { name: "Russian Twists", sets: 3, reps: "10-12", duration: 30, media: "./content/russian-twists.mp4" },
+            { name: "Dumbbell Shoulder Press", sets: 3, reps: "8-12", duration: 45, media: "../content/shoulder-press.gif" },
+            { name: "Lateral Raises", sets: 3, reps: "10-12", duration: 30, media: "../content/lateral-raises.webp" },
+            { name: "Rear Delt Flyes", sets: 3, reps: "12-15", duration: 30, media: "../content/rear-delt-fly.webp" },
+            { name: "Hanging Leg Raises", sets: 3, reps: "10-12", duration: 30, media: "../content/hanging-leg-raise.webp" },
+            { name: "Planks", sets: 3, duration: 60, isStatic: true, media: "../content/plank.gif" },
+            { name: "Russian Twists", sets: 3, reps: "10-12", duration: 30, media: "../content/russian-twists.mp4" },
           ],
         },
         day5: {
           title: "Day 5: Chest and Triceps",
           exercises: [
-            { name: "Incline Bench Press", sets: 4, reps: "8-12", duration: 45, media: "./content/incline-bench-press.mp4" },
-            { name: "Dumbbell Chest Press", sets: 3, reps: "10-12", duration: 45, media: "./content/Bench-press-barbell.mp4" },
-            { name: "Cable Crossovers", sets: 3, reps: "12-15", duration: 45, media: "./content/cable-flyes.mp4" },
-            { name: "Tricep Dips", sets: 3, reps: "10-12", duration: 30, media: "./content/tricep-dips.webp" },
-            { name: "Overhead Rope Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/overhead-rope-extension.webp" },
-            { name: "Tricep Kickbacks", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
+            { name: "Incline Bench Press", sets: 4, reps: "8-12", duration: 45, media: "../content/incline-bench-press.mp4" },
+            { name: "Dumbbell Chest Press", sets: 3, reps: "10-12", duration: 45, media: "../content/Bench-press-barbell.mp4" },
+            { name: "Cable Crossovers", sets: 3, reps: "12-15", duration: 45, media: "../content/cable-flyes.mp4" },
+            { name: "Tricep Dips", sets: 3, reps: "10-12", duration: 30, media: "../content/tricep-dips.webp" },
+            { name: "Overhead Rope Extensions", sets: 3, reps: "12-15", duration: 30, media: "../content/overhead-rope-extension.webp" },
+            { name: "Skull Crushers", sets: 3, reps: "8-10", duration: 30, media: "../content/Triceps-Kickback.mp4" },
           ],
         },
         day6: {
           title: "Day 6: Back and Biceps",
           exercises: [
-            { name: "Deadlifts", sets: 4, reps: "8-12", duration: 45, media: "./content/Pull-ups.mp4" },
-            { name: "Bent-Over Barbell Rows", sets: 3, reps: "8-12", duration: 45, media: "./content/barbell-row.webp" },
-            { name: "Pull-aparts", sets: 3, reps: "10-12", duration: 45, media: "./content/lat-pulldown.mp4" },
-            { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/bicep-curl.mp4" },
-            { name: "Hammer Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/hammer-curl.mp4" },
-            { name: "Concentration Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/concentartion-curls.mp4" },
+            { name: "Deadlifts", sets: 4, reps: "8-12", duration: 45, media: "../content/Pull-ups.mp4" },
+            { name: "Bent-Over Barbell Rows", sets: 3, reps: "8-12", duration: 45, media: "../content/barbell-row.webp" },
+            { name: "Pull-aparts", sets: 3, reps: "10-12", duration: 45, media: "../content/lat-pulldown.mp4" },
+            { name: "Dumbbell Bicep Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/bicep-curl.mp4" },
+            { name: "Hammer Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/hammer-curl.mp4" },
+            { name: "Concentration Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/concentartion-curls.mp4" },
           ],
         },
         day7: {
           title: "Day 7: Legs",
           exercises: [
-            { name: "Leg Press", sets: 4, reps: "8-12", duration: 45, media: "./content/leg-press.mp4" },
-            { name: "Squats", sets: 3, reps: "10-12", duration: 45, media: "./content/squats.webp" },
-            { name: "Lunges", sets: 3, reps: "10-12", duration: 45, media: "./content/lunges.mp4" },
-            { name: "Leg Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/leg-extension.png" },
-            { name: "Leg Curls", sets: 3, reps: "10-12", duration: 30, media: "./content/leg-curls.mp4" },
-            { name: "Calf Raises", sets: 3, reps: "12-15", duration: 30, media: "./content/calf-raise.mp4" },
+            { name: "Leg Press", sets: 4, reps: "8-12", duration: 45, media: "../content/leg-press.mp4" },
+            { name: "Squats", sets: 3, reps: "10-12", duration: 45, media: "../content/squats.webp" },
+            { name: "Lunges", sets: 3, reps: "10-12", duration: 45, media: "../content/lunges.mp4" },
+            { name: "Leg Extensions", sets: 3, reps: "12-15", duration: 30, media: "../content/leg-extension.png" },
+            { name: "Leg Curls", sets: 3, reps: "10-12", duration: 30, media: "../content/leg-curls.mp4" },
+            { name: "Calf Raises", sets: 3, reps: "12-15", duration: 30, media: "../content/calf-raise.mp4" },
           ],
         },
       };
@@ -717,20 +712,21 @@
 
       // Rest Timer class
       class RestTimer {
-        constructor(duration, display, startButton, skipButton, checkbox) {
+        constructor(duration, display, startButton, skipButton, setsContainer) {
           this.duration = duration;
           this.display = display;
           this.startButton = startButton;
           this.skipButton = skipButton;
-          this.checkbox = checkbox;
+          this.setsContainer = setsContainer;
           this.interval = null;
+          this.originalColor = this.display.style.color;
         }
 
         start() {
           let timer = this.duration;
-          this.startButton.disabled = true;
+          if (this.startButton) this.startButton.style.display = "none";
           this.skipButton.style.display = "inline-block";
-          this.checkbox.disabled = true;
+          this.display.style.color = "var(--timer-active)";
 
           this.interval = setInterval(() => {
             const minutes = Math.floor(timer / 60);
@@ -752,9 +748,16 @@
 
         complete() {
           clearInterval(this.interval);
-          this.startButton.disabled = false;
+          if (this.startButton) this.startButton.style.display = "inline-block";
           this.skipButton.style.display = "none";
-          this.checkbox.disabled = false;
+
+          // Enable unchecked checkboxes after rest
+          if (this.setsContainer) {
+            this.setsContainer.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach((cb) => {
+              cb.disabled = false;
+            });
+          }
+
           this.display.textContent = "Rest Complete!";
           this.display.style.color = "var(--success)";
         }
@@ -768,19 +771,74 @@
         const name = card.querySelector(".exercise-name");
         const details = card.querySelector(".exercise-details");
         const timerDisplay = card.querySelector(".timer-display");
-        const startButton = card.querySelector(".btn-timer");
         const skipButton = card.querySelector(".btn-skip");
-        const checkbox = card.querySelector(".form-check-input");
         const mediaContainer = card.querySelector(".exercise-media");
+        const setsContainer = card.querySelector(".sets-container");
+        const exerciseStatus = card.querySelector(".exercise-status");
 
-        // Set unique ID for checkbox
-        const checkboxId = `exercise-${exercise.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
-        checkbox.id = checkboxId;
-        card.querySelector(".form-check-label").setAttribute("for", checkboxId);
+        // Generate unique ID for the exercise
+        const exerciseId = `exercise-${exercise.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
 
         name.textContent = exercise.name;
-        details.textContent = `${exercise.sets} sets × ${exercise.reps} reps`;
+        details.textContent = `${exercise.sets} sets × ${exercise.reps || exercise.duration + "s"}`;
         timerDisplay.textContent = "00:00";
+
+        // Create checkboxes for each set
+        for (let i = 1; i <= exercise.sets; i++) {
+          const setDiv = document.createElement("div");
+          setDiv.className = "d-flex justify-content-between align-items-center mb-2 p-2 border-bottom border-secondary";
+
+          const checkboxDiv = document.createElement("div");
+          checkboxDiv.className = "form-check";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "form-check-input";
+          checkbox.id = `${exerciseId}-set-${i}`;
+
+          const label = document.createElement("label");
+          label.className = "form-check-label me-2";
+          label.htmlFor = checkbox.id;
+          label.textContent = `Set ${i}`;
+
+          const repsSpan = document.createElement("span");
+          repsSpan.className = "text-secondary";
+          repsSpan.textContent = exercise.reps || `${exercise.duration}s`;
+
+          checkboxDiv.appendChild(checkbox);
+          checkboxDiv.appendChild(label);
+          setDiv.appendChild(checkboxDiv);
+          setDiv.appendChild(repsSpan);
+          setsContainer.appendChild(setDiv);
+
+          // Handle checkbox changes
+          checkbox.addEventListener("change", function () {
+            if (this.checked) {
+              // Start rest timer if it's not the last set
+              if (i < exercise.sets) {
+                // Create and start rest timer
+                const restTimer = new RestTimer(exercise.duration, timerDisplay, null, skipButton, setsContainer);
+                restTimer.start();
+
+                // Disable unchecked checkboxes during rest
+                setsContainer.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach((cb) => {
+                  cb.disabled = true;
+                });
+              } else {
+                // Last set completed
+                timerDisplay.textContent = "Exercise Complete!";
+                timerDisplay.style.color = "var(--success)";
+                exerciseStatus.textContent = "All sets completed! 💪";
+              }
+            }
+
+            // Update exercise status
+            const completedSets = setsContainer.querySelectorAll('input[type="checkbox"]:checked').length;
+            if (completedSets > 0 && completedSets < exercise.sets) {
+              exerciseStatus.textContent = `${completedSets}/${exercise.sets} sets completed`;
+            }
+          });
+        }
 
         // Set up media placeholder with error handling
         if (exercise.media) {
@@ -789,7 +847,7 @@
             const video = document.createElement("video");
             video.src = exercise.media;
             video.controls = true;
-            video.muted = true; // Add muted attribute for autoplay to work
+            video.muted = true;
             video.playsInline = true;
             video.preload = "metadata";
             video.style.width = "100%";
@@ -797,22 +855,19 @@
             video.style.objectFit = "cover";
             video.style.backgroundColor = "var(--bg-dark)";
 
-            // Add loading placeholder
             mediaContainer.innerHTML = '<div class="loading-placeholder">Loading video...</div>';
 
-            // Handle video loading
             video.addEventListener("loadeddata", () => {
-              mediaContainer.innerHTML = ""; // Clear loading message
+              mediaContainer.innerHTML = "";
               mediaContainer.appendChild(video);
             });
 
-            // Handle video error
             video.addEventListener("error", () => {
               mediaContainer.innerHTML = `
-                            <div class="media-error">
-                                <p>Unable to load video</p>
-                                <small>${exercise.name}</small>
-                            </div>`;
+                <div class="media-error">
+                  <p>Unable to load video</p>
+                  <small>${exercise.name}</small>
+                </div>`;
             });
           } else {
             const img = document.createElement("img");
@@ -823,32 +878,26 @@
             img.style.objectFit = "cover";
             img.style.backgroundColor = "var(--bg-dark)";
 
-            // Add loading placeholder
             mediaContainer.innerHTML = '<div class="loading-placeholder">Loading image...</div>';
 
-            // Handle image loading
             img.onload = () => {
-              mediaContainer.innerHTML = ""; // Clear loading message
+              mediaContainer.innerHTML = "";
               mediaContainer.appendChild(img);
             };
 
-            // Handle image error
             img.onerror = () => {
               mediaContainer.innerHTML = `
-                            <div class="media-error">
-                                <p>Unable to load image</p>
-                                <small>${exercise.name}</small>
-                            </div>`;
+                <div class="media-error">
+                  <p>Unable to load image</p>
+                  <small>${exercise.name}</small>
+                </div>`;
             };
           }
         }
 
-        startButton.addEventListener("click", () => {
-          startTimer(exercise.duration, timerDisplay, startButton, checkbox);
-        });
-
+        // Add skip button handler
         skipButton.addEventListener("click", function () {
-          const restTimer = new RestTimer(exercise.duration, timerDisplay, startButton, skipButton, checkbox);
+          const restTimer = new RestTimer(exercise.duration, timerDisplay, null, skipButton, setsContainer);
           restTimer.skip();
         });
 
