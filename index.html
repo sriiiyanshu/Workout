@@ -517,7 +517,7 @@
             { name: "Cable Flyes", sets: 3, reps: "12-15", duration: 45, media: "./content/cable-flyes.mp4" },
             { name: "Tricep Pushdowns", sets: 3, reps: "10-12", duration: 30, media: "./content/tricep-pushdown.jpg" },
             { name: "Overhead Dumbbell Extension", sets: 3, reps: "12-15", duration: 30, media: "./content/overhead-rope-extension.webp" },
-            { name: "Skull Crushers", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
+            { name: "Tricep Kickbacks", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
           ],
         },
         day2: {
@@ -561,7 +561,7 @@
             { name: "Cable Crossovers", sets: 3, reps: "12-15", duration: 45, media: "./content/cable-flyes.mp4" },
             { name: "Tricep Dips", sets: 3, reps: "10-12", duration: 30, media: "./content/tricep-dips.webp" },
             { name: "Overhead Rope Extensions", sets: 3, reps: "12-15", duration: 30, media: "./content/overhead-rope-extension.webp" },
-            { name: "Skull Crushers", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
+            { name: "Tricep Kickbacks", sets: 3, reps: "8-10", duration: 30, media: "./content/Triceps-Kickback.mp4" },
           ],
         },
         day6: {
@@ -712,21 +712,24 @@
 
       // Rest Timer class
       class RestTimer {
-        constructor(duration, display, startButton, skipButton, setsContainer) {
+        constructor(duration, display, skipButton, setsContainer) {
           this.duration = duration;
           this.display = display;
-          this.startButton = startButton;
           this.skipButton = skipButton;
           this.setsContainer = setsContainer;
           this.interval = null;
-          this.originalColor = this.display.style.color;
+          this.isResting = false;
         }
 
         start() {
+          this.isResting = true;
           let timer = this.duration;
-          if (this.startButton) this.startButton.style.display = "none";
           this.skipButton.style.display = "inline-block";
           this.display.style.color = "var(--timer-active)";
+          this.display.classList.add("active");
+
+          // Disable checkboxes during rest
+          this.disableUncheckedCheckboxes();
 
           this.interval = setInterval(() => {
             const minutes = Math.floor(timer / 60);
@@ -747,9 +750,12 @@
         }
 
         complete() {
+          if (!this.isResting) return;
+
           clearInterval(this.interval);
-          if (this.startButton) this.startButton.style.display = "inline-block";
+          this.isResting = false;
           this.skipButton.style.display = "none";
+          this.display.classList.remove("active");
 
           // Enable unchecked checkboxes after rest
           if (this.setsContainer) {
@@ -760,6 +766,14 @@
 
           this.display.textContent = "Rest Complete!";
           this.display.style.color = "var(--success)";
+        }
+
+        disableUncheckedCheckboxes() {
+          if (this.setsContainer) {
+            this.setsContainer.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach((cb) => {
+              cb.disabled = true;
+            });
+          }
         }
       }
 
@@ -775,6 +789,7 @@
         const mediaContainer = card.querySelector(".exercise-media");
         const setsContainer = card.querySelector(".sets-container");
         const exerciseStatus = card.querySelector(".exercise-status");
+        let activeRestTimer = null; // Move this to card scope
 
         // Generate unique ID for the exercise
         const exerciseId = `exercise-${exercise.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
@@ -817,13 +832,8 @@
               // Start rest timer if it's not the last set
               if (i < exercise.sets) {
                 // Create and start rest timer
-                const restTimer = new RestTimer(exercise.duration, timerDisplay, null, skipButton, setsContainer);
-                restTimer.start();
-
-                // Disable unchecked checkboxes during rest
-                setsContainer.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach((cb) => {
-                  cb.disabled = true;
-                });
+                activeRestTimer = new RestTimer(exercise.duration, timerDisplay, skipButton, setsContainer);
+                activeRestTimer.start();
               } else {
                 // Last set completed
                 timerDisplay.textContent = "Exercise Complete!";
@@ -896,9 +906,11 @@
         }
 
         // Add skip button handler
-        skipButton.addEventListener("click", function () {
-          const restTimer = new RestTimer(exercise.duration, timerDisplay, null, skipButton, setsContainer);
-          restTimer.skip();
+        skipButton.addEventListener("click", () => {
+          if (activeRestTimer && activeRestTimer.isResting) {
+            activeRestTimer.skip();
+            activeRestTimer = null; // Clear the timer reference after skipping
+          }
         });
 
         return card;
